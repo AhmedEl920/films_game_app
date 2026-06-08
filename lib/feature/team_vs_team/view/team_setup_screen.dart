@@ -14,6 +14,8 @@ class _TeamSetupScreenState extends State<TeamSetupScreen> {
   final TextEditingController team1NameController = TextEditingController();
   final TextEditingController team2NameController = TextEditingController();
 
+  int selectedDurationSeconds = 90; // 1.5 minutes default
+
   @override
   void dispose() {
     team1NameController.dispose();
@@ -36,6 +38,7 @@ class _TeamSetupScreenState extends State<TeamSetupScreen> {
       arguments: {
         'team1Name': team1,
         'team2Name': team2,
+        'durationSeconds': selectedDurationSeconds,
       },
     );
   }
@@ -64,18 +67,78 @@ class _TeamSetupScreenState extends State<TeamSetupScreen> {
                 teamNameController: team2NameController,
               ),
 
+              const SizedBox(height: 24),
+              const Text(
+                'قواعد اللعبة:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text('١. يتم تقسيم اللاعبين إلى فريقين.'),
+              const Text('٢. يقوم أحد اللاعبين بتمثيل اسم فيلم بدون كلام.'),
+              const Text('٣. يجب على فريقه تخمين الفيلم قبل انتهاء الوقت.'),
+              const Text('٤. الفريق الذي يجمع أكبر عدد من النقاط هو الفائز.'),
+
+              const SizedBox(height: 24),
+              const Text(
+                'مدة التمثيل:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: ChoiceChip(
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      label: const Center(child: Text('دقيقة', style: TextStyle(fontSize: 12))),
+                      selected: selectedDurationSeconds == 60,
+                      onSelected: (selected) {
+                        if (selected) setState(() => selectedDurationSeconds = 60);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: ChoiceChip(
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      label: const Center(child: Text('١.٥ دقيقة', style: TextStyle(fontSize: 12))),
+                      selected: selectedDurationSeconds == 90,
+                      onSelected: (selected) {
+                        if (selected) setState(() => selectedDurationSeconds = 90);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: ChoiceChip(
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      label: const Center(child: Text('دقيقتين', style: TextStyle(fontSize: 12))),
+                      selected: selectedDurationSeconds == 120,
+                      onSelected: (selected) {
+                        if (selected) setState(() => selectedDurationSeconds = 120);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: ChoiceChip(
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      label: const Center(child: Text('٣ دقائق', style: TextStyle(fontSize: 12))),
+                      selected: selectedDurationSeconds == 180,
+                      onSelected: (selected) {
+                        if (selected) setState(() => selectedDurationSeconds = 180);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
               const SizedBox(height: 32),
               CustomElevatedButton(text: 'ابدأ اللعبة', onPressed: _startGame),
-              // ElevatedButton(
-              //   onPressed: _startGame,
-              //   style: ElevatedButton.styleFrom(
-              //     padding: const EdgeInsets.symmetric(vertical: 16),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(12),
-              //     ),
-              //   ),
-              //   child: const Text('ابدأ اللعبة', style: TextStyle(fontSize: 18)),
-              // ),
+      
             ],
           ),
         ),

@@ -17,6 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  stop_watch_timer: 3.2.2
 
 dev_dependencies:
   flutter_test:

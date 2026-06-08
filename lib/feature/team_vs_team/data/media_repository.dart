@@ -5,12 +5,26 @@ import 'package:game_app/feature/team_vs_team/data/media_model.dart';
 
 class MediaRepository {
   MediaData? _mediaData;
+  List<dynamic> _luckyCards = [];
   final Random _random = Random();
 
   Future<void> loadData() async {
     final String response = await rootBundle.loadString('assets/json/media_data.json');
     final data = await json.decode(response);
     _mediaData = MediaData.fromJson(data);
+
+    try {
+      final String luckyResponse = await rootBundle.loadString('assets/json/lucky_card.json');
+      _luckyCards = await json.decode(luckyResponse);
+    } catch (e) {
+      _luckyCards = [];
+    }
+  }
+
+  String getRandomLuckyCard() {
+    if (_luckyCards.isEmpty) return "لا يوجد كارت حظ";
+    final card = _luckyCards[_random.nextInt(_luckyCards.length)];
+    return card['name'] ?? "لا يوجد كارت حظ";
   }
 
   MediaItem getRandomMovie() {

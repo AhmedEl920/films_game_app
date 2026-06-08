@@ -21,6 +21,7 @@ class AppRouter {
           GameScreen(
             team1Name: args?['team1Name'] ?? '',
             team2Name: args?['team2Name'] ?? '',
+            durationSeconds: args?['durationSeconds'] ?? 90,
           ),
         );
 
