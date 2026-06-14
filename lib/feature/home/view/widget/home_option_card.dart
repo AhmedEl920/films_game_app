@@ -65,6 +65,7 @@ class HomeOptionCard extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
+
             ),
 
             const SizedBox(height: 6),
@@ -73,7 +74,10 @@ class HomeOptionCard extends StatelessWidget {
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontFamily: 'Amiri',
+                    fontSize: 16.sp,
+                  ),
             ),
           ],
         ),

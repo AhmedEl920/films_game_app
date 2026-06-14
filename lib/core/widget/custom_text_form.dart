@@ -107,6 +107,8 @@ class _CustomTextFormState extends State<CustomTextForm> {
         hintStyle: widget.hintStyle ??
             Theme.of(context).textTheme.labelMedium?.copyWith(
               color: Theme.of(context).hintColor,
+              fontFamily: 'Amiri',
+              fontSize: 16.sp,
             ),
         isDense: true,
         contentPadding: widget.contentPadding ?? EdgeInsets.all(14.r),

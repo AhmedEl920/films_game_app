@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_app/core/constant/app_color.dart';
 import 'package:game_app/core/constant/app_image.dart';
 import 'package:game_app/core/router/app_routes.dart';
@@ -56,20 +57,21 @@ class _SplashPageState extends State<SplashPage>
                 borderRadius: BorderRadius.circular(26),
                 child: Image.asset(
                   AppImage.logoSplash,
-                  width: 200,
-                  height: 200,
+                  width: 200.w,
+                  height: 200.h,
                 ),
               ),
             ),
             const SizedBox(height: 20),
             ScaleTransition(
               scale: _animation,
-              child: const Text(
+              child:  Text(
                 'أفلام من غير كلام',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.secondary,
+                  fontFamily: 'Amiri',
                 ),
               ),
             ),

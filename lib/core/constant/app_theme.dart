@@ -11,10 +11,10 @@ class AppTheme {
     primaryColor: AppColors.primary,
     cardColor: AppColors.cardBackground,
     dividerColor: AppColors.divider,
-    fontFamily: 'Cairo',
+    fontFamily: 'arsura',
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.accent,
       foregroundColor: AppColors.black,
       elevation: 0,
       centerTitle: true,
@@ -36,9 +36,9 @@ class AppTheme {
 
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
 
-      labelStyle: const TextStyle(color: AppColors.textPrimary),
+      labelStyle: const TextStyle(color: AppColors.textPrimary,fontFamily: 'Amiri'),
 
-      hintStyle: const TextStyle(color: AppColors.textSecondary),
+      hintStyle: const TextStyle(color: AppColors.textSecondary,fontFamily: 'Amiri'),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -82,17 +82,17 @@ class AppTheme {
       titleMedium: TextStyle(
         color: AppColors.textPrimary,
         fontWeight: FontWeight.bold,
-        fontSize: 16.sp,
+        fontSize: 20.sp,
       ),
 
       titleSmall: TextStyle(
         color: AppColors.textSecondary,
         fontWeight: FontWeight.w600,
-        fontSize: 14.sp,
+        fontSize: 16.sp,
       ),
 
       labelLarge: TextStyle(
-        fontFamily: "arsura",
+        fontFamily: "Amiri",
         fontWeight: FontWeight.bold,
         fontSize: 30.sp,
         color: AppColors.white,
@@ -149,7 +149,7 @@ class AppTheme {
     primaryColor: AppColors.darkPrimary,
     cardColor: AppColors.darkCardBackground,
     dividerColor: AppColors.darkDivider,
-    fontFamily: 'Cairo',
+    fontFamily: 'arsura',
 
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.darkBackground,

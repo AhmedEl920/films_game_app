@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_app/core/constant/app_color.dart';
+import 'package:game_app/core/constant/app_image.dart';
 import 'package:game_app/core/widget/custom_elevated_button.dart';
 
 class LuckyCardWidget extends StatefulWidget {
@@ -7,10 +10,10 @@ class LuckyCardWidget extends StatefulWidget {
   final VoidCallback onClose;
 
   const LuckyCardWidget({
-    Key? key,
+    super.key,
     required this.luckyCardText,
     required this.onClose,
-  }) : super(key: key);
+  });
 
   @override
   State<LuckyCardWidget> createState() => _LuckyCardWidgetState();
@@ -64,15 +67,15 @@ class _LuckyCardWidgetState extends State<LuckyCardWidget> with SingleTickerProv
               FlipCard(
                 key: _cardKey,
                 front: Container(
-                  width: 250,
-                  height: 350,
+                  width: 250.w,
+                  height: 350.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Image.asset(
-                      'assets/images/card2.png',
+                     AppImage.cardImage2,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
                         color: Colors.amber,
@@ -84,28 +87,30 @@ class _LuckyCardWidgetState extends State<LuckyCardWidget> with SingleTickerProv
                   ),
                 ),
                 back: Container(
-                  width: 250,
-                  height: 350,
+                  width: 250.w,
+                  height: 350.h,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:  AppColors.accent.withOpacity(
+                                            0.9,
+                                          ),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.amber, width: 3),
+                    border: Border.all(color: Colors.black, width: 3),
                   ),
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     widget.luckyCardText,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black,fontFamily: 'Amiri'),
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
               const Text(
                 'لابد من تنفيذ الكارت',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white,fontFamily: 'Amiri'),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               CustomElevatedButton(
                 text: 'إلغاء',
                 backgroundColor: Colors.red,

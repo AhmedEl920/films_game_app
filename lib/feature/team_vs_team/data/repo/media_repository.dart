@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/services.dart';
-import 'package:game_app/feature/team_vs_team/data/media_model.dart';
+import 'package:game_app/feature/team_vs_team/data/model/media_model.dart';
 
 class MediaRepository {
   MediaData? _mediaData;

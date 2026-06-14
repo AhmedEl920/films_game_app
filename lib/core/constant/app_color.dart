@@ -7,8 +7,9 @@ class AppColors {
  static const Color primary = Color(0xFFFDC401);
 static const Color secondary = Color(0xFF1E1E1E);
 static const Color accent = Color(0xFFFFD54F);
-
-static const Color background = Color(0xFFF5F5F5);
+// static const Color background = Color(0xFFF7F7F7);
+static const Color background = Color(0xFFFFFBF0);
+// static const Color background = Color(0xFFF5F5F5);
 static const Color cardBackground = Colors.white;
 
 static const Color textPrimary = Color(0xFF121212);

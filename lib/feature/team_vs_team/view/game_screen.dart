@@ -2,9 +2,14 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_app/core/constant/app_color.dart';
+import 'package:game_app/core/constant/app_image.dart';
+import 'package:game_app/feature/team_vs_team/view/widget/bottom_action_area.dart';
+import 'package:game_app/feature/team_vs_team/view/widget/custom_dialog_widget.dart';
+import 'package:game_app/feature/team_vs_team/view/widget/custom_winer_widget.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:game_app/core/widget/custom_elevated_button.dart';
-import 'package:game_app/feature/team_vs_team/data/media_repository.dart';
+import 'package:game_app/feature/team_vs_team/data/repo/media_repository.dart';
 import 'package:game_app/feature/team_vs_team/view_model/game_cubit.dart';
 import 'package:game_app/feature/team_vs_team/view/widget/lucky_card_widget.dart';
 
@@ -104,7 +109,25 @@ class _GameScreenState extends State<GameScreen> {
           GameCubit(MediaRepository())
             ..initGame(widget.team1Name, widget.team2Name),
       child: Scaffold(
-        appBar: AppBar(title: const Text('افلام من غير كلام')),
+        appBar: AppBar(
+          title: const Text('افلام من غير كلام'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => CustomDialogWidget(
+                    buttonText: 'الغاء',
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
+              },
+              icon: Icon(Icons.rocket_launch),
+            ),
+          ],
+        ),
         body: BlocBuilder<GameCubit, GameState>(
           builder: (context, state) {
             if (state is GameLoading) {
@@ -115,7 +138,10 @@ class _GameScreenState extends State<GameScreen> {
               return Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 12,
+                    ),
                     child: Column(
                       children: [
                         // Scores Header
@@ -144,38 +170,32 @@ class _GameScreenState extends State<GameScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 8),
 
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   'دور : ${state.currentTeamName}',
                                   style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'Amiri',
                                   ),
                                 ),
-                                const SizedBox(height: 32),
+                                const SizedBox(height: 16),
                                 Stack(
                                   clipBehavior: Clip.none,
                                   children: [
                                     FlipCard(
                                       key: _cardKey,
                                       front: Container(
-                                        width: 250,
-                                        height: 350,
+                                        width: 300.w,
+                                        height: 450.h,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                             16,
-                                          ),
-                                          gradient: const LinearGradient(
-                                            colors: [
-                                              Colors.deepPurple,
-                                              Colors.indigo,
-                                            ],
                                           ),
                                         ),
                                         child: ClipRRect(
@@ -184,8 +204,8 @@ class _GameScreenState extends State<GameScreen> {
                                           ),
                                           child: Image.asset(
                                             state.isTeam1Turn
-                                                ? 'assets/images/card4.png'
-                                                : 'assets/images/card3.png',
+                                                ? AppImage.cardImage4
+                                                : AppImage.cardImage3,
                                             fit: BoxFit.cover,
                                             errorBuilder:
                                                 (context, error, stackTrace) =>
@@ -200,24 +220,19 @@ class _GameScreenState extends State<GameScreen> {
                                         ),
                                       ),
                                       back: Container(
-                                        width: 250,
-                                        height: 350,
+                                        width: 300.w,
+                                        height: 450.h,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: AppColors.accent.withOpacity(
+                                            0.9,
+                                          ),
                                           borderRadius: BorderRadius.circular(
                                             16,
                                           ),
                                           border: Border.all(
                                             color: Colors.black,
-                                            width: 2,
+                                            width: 1,
                                           ),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              offset: Offset(0, 5),
-                                              color: Colors.black26,
-                                            ),
-                                          ],
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(16),
@@ -231,18 +246,17 @@ class _GameScreenState extends State<GameScreen> {
                                                     fontSize: 24,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black,
+                                                    fontFamily: 'Amiri',
                                                   ),
                                                 ),
                                               ),
                                               const Spacer(),
                                               Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       const Icon(
                                                         Icons.movie,
@@ -256,7 +270,12 @@ class _GameScreenState extends State<GameScreen> {
                                                               const TextStyle(
                                                                 color: Colors
                                                                     .black,
-                                                                fontSize: 16,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    'Amiri',
                                                               ),
                                                         ),
                                                       ),
@@ -264,8 +283,6 @@ class _GameScreenState extends State<GameScreen> {
                                                   ),
                                                   const SizedBox(height: 16),
                                                   Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
                                                     children: [
                                                       const Icon(
                                                         Icons.tv,
@@ -279,7 +296,12 @@ class _GameScreenState extends State<GameScreen> {
                                                               const TextStyle(
                                                                 color: Colors
                                                                     .black,
-                                                                fontSize: 16,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    'Amiri',
                                                               ),
                                                         ),
                                                       ),
@@ -287,8 +309,6 @@ class _GameScreenState extends State<GameScreen> {
                                                   ),
                                                   const SizedBox(height: 16),
                                                   Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
                                                     children: [
                                                       const Icon(
                                                         Icons.theater_comedy,
@@ -302,7 +322,12 @@ class _GameScreenState extends State<GameScreen> {
                                                               const TextStyle(
                                                                 color: Colors
                                                                     .black,
-                                                                fontSize: 16,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    'Amiri',
                                                               ),
                                                         ),
                                                       ),
@@ -323,6 +348,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black,
+                                                      fontFamily: 'Amiri',
                                                     ),
                                                   ),
                                                 ),
@@ -347,7 +373,7 @@ class _GameScreenState extends State<GameScreen> {
                                               99,
                                             ),
                                             child: Image.asset(
-                                              'assets/images/card.png',
+                                              AppImage.cardImage,
                                               width: 60.w,
                                               height: 60.h,
                                               errorBuilder:
@@ -366,10 +392,52 @@ class _GameScreenState extends State<GameScreen> {
                                       ),
                                   ],
                                 ),
-                                const SizedBox(height: 32),
+                                const SizedBox(height: 12),
 
                                 // Bottom Action Area
-                                _buildBottomActionArea(context),
+                                BottomActionArea(
+                                  currentPhase: _currentPhase,
+                                  onStartTimer: _startTimer,
+                                  stopWatchTimer: _stopWatchTimer,
+                                  isPaused: _isPaused,
+                                  onPauseResume: () {
+                                    if (_isPaused) {
+                                      _stopWatchTimer.onStartTimer();
+                                    } else {
+                                      _stopWatchTimer.onStopTimer();
+                                    }
+
+                                    setState(() {
+                                      _isPaused = !_isPaused;
+                                    });
+                                  },
+                                  onEndTurn: () {
+                                    _stopWatchTimer.onStopTimer();
+
+                                    setState(() {
+                                      _currentPhase = GamePhase.ended;
+                                    });
+                                  },
+                                  movieChecked: _movieChecked,
+                                  seriesChecked: _seriesChecked,
+                                  playChecked: _playChecked,
+                                  onMovieChanged: (value) {
+                                    setState(
+                                      () => _movieChecked = value ?? false,
+                                    );
+                                  },
+                                  onSeriesChanged: (value) {
+                                    setState(
+                                      () => _seriesChecked = value ?? false,
+                                    );
+                                  },
+                                  onPlayChanged: (value) {
+                                    setState(
+                                      () => _playChecked = value ?? false,
+                                    );
+                                  },
+                                  onNext: () => _nextTurn(context),
+                                ),
                               ],
                             ),
                           ),
@@ -391,40 +459,12 @@ class _GameScreenState extends State<GameScreen> {
                 ],
               );
             } else if (state is GameFinished) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'مبروك!',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'الفريق الفائز: ${state.winnerName}',
-                      style: const TextStyle(fontSize: 30),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'النتيجة: ${state.team1Score} - ${state.team2Score}',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    const SizedBox(height: 40),
-                    CustomElevatedButton(
-                      text: 'لعبة جديدة',
-                      onPressed: () {
-                        context.read<GameCubit>().initGame(
-                          state.team1Name,
-                          state.team2Name,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+              return CustomWinerWidget(
+                team1Score: state.team1Score,
+                team2Score: state.team2Score,
+                winnerName: state.winnerName,
+                team1Name: state.team1Name,
+                team2Name: state.team2Name,
               );
             }
             return const SizedBox.shrink();
@@ -432,122 +472,5 @@ class _GameScreenState extends State<GameScreen> {
         ),
       ),
     );
-  }
-
-  Widget _buildBottomActionArea(BuildContext context) {
-    if (_currentPhase == GamePhase.initial) {
-      return CustomElevatedButton(text: 'ابدأ', onPressed: _startTimer);
-    } else if (_currentPhase == GamePhase.playing) {
-      return Column(
-        children: [
-          StreamBuilder<int>(
-            stream: _stopWatchTimer.rawTime,
-            initialData: _stopWatchTimer.rawTime.value,
-            builder: (context, snap) {
-              final value = snap.data!;
-              final displayTime = StopWatchTimer.getDisplayTime(
-                value,
-                hours: false,
-                milliSecond: false,
-              );
-              return Text(
-                displayTime,
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CustomElevatedButton(
-                  text: _isPaused ? 'استمرار' : 'إيقاف',
-                  onPressed: () {
-                    if (_isPaused) {
-                      _stopWatchTimer.onStartTimer();
-                    } else {
-                      _stopWatchTimer.onStopTimer();
-                    }
-                    setState(() {
-                      _isPaused = !_isPaused;
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomElevatedButton(
-                  text: 'إنهاء الدور',
-                  backgroundColor: Colors.red,
-                  onPressed: () {
-                    _stopWatchTimer.onStopTimer();
-                    setState(() {
-                      _currentPhase = GamePhase.ended;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-    } else {
-      // Ended phase
-      return Column(
-        children: [
-          const Text(
-            'اختر ما تم تمثيله',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: CheckboxListTile(
-                  title: const Text('الفيلم', style: TextStyle(fontSize: 12)),
-                  value: _movieChecked,
-                  onChanged: (val) {
-                    setState(() => _movieChecked = val ?? false);
-                  },
-                  contentPadding: EdgeInsets.zero,
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
-              ),
-              Expanded(
-                child: CheckboxListTile(
-                  title: const Text('المسلسل', style: TextStyle(fontSize: 12)),
-                  value: _seriesChecked,
-                  onChanged: (val) {
-                    setState(() => _seriesChecked = val ?? false);
-                  },
-                  contentPadding: EdgeInsets.zero,
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
-              ),
-              Expanded(
-                child: CheckboxListTile(
-                  title: const Text('المسرحية', style: TextStyle(fontSize: 12)),
-                  value: _playChecked,
-                  onChanged: (val) {
-                    setState(() => _playChecked = val ?? false);
-                  },
-                  contentPadding: EdgeInsets.zero,
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          CustomElevatedButton(
-            text: 'التالي',
-            onPressed: () => _nextTurn(context),
-          ),
-        ],
-      );
-    }
   }
 }
