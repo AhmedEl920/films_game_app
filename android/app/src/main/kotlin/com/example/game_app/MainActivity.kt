@@ -1,4 +1,4 @@
-package com.example.game_app
+package com.ahmedelgammal.silentmovies
 
 import io.flutter.embedding.android.FlutterActivity
 
