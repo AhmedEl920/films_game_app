@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_app/core/Service/sound_service.dart';
 import 'package:game_app/core/widget/custom_elevated_button.dart';
 import 'package:game_app/core/router/app_routes.dart';
 import 'package:game_app/feature/team_vs_team/view/widget/duration_selector_widget.dart';
@@ -25,11 +26,12 @@ class _TeamSetupScreenState extends State<TeamSetupScreen> {
     super.dispose();
   }
 
-  void _startGame() {
+  Future<void> _startGame() async {
     // You can validate and proceed to the next screen here
     // Example: collecting the string values from controllers
     String team1 = team1NameController.text;
     String team2 = team2NameController.text;
+    await SoundService.playClick();
 
     Navigator.pushReplacementNamed(
       context,
@@ -85,7 +87,7 @@ class _TeamSetupScreenState extends State<TeamSetupScreen> {
               ),
 
               const SizedBox(height: 16),
-              CustomElevatedButton(text: 'ابدأ اللعبة', onPressed: _startGame),
+              CustomElevatedButton(text: 'ابدأ اللعبة', onPressed: _startGame,),
               const SizedBox(height: 16),
               GameRulesWidget(),
             ],
